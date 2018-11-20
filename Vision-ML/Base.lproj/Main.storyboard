@@ -62,6 +62,10 @@
                                     <constraint firstAttribute="width" constant="80" id="mcm-hy-Sot"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="nup-d8-Uce">
+                                <rect key="frame" x="300" y="510" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rG3-5f-tK6">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.64333836802554845" green="1" blue="0.63412071227868272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -93,10 +97,12 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="rG3-5f-tK6" id="EhK-cD-367"/>
+                        <outlet property="captureImageView" destination="gdD-Uu-jhV" id="Gup-nu-jEG"/>
                         <outlet property="confidenceLbl" destination="7qk-YN-y1i" id="fgp-JD-t3g"/>
                         <outlet property="flashBtn" destination="b3n-NS-iAN" id="Ncu-28-JS1"/>
                         <outlet property="identificationLbl" destination="OGL-G6-ya6" id="LfO-vr-gxH"/>
                         <outlet property="roundedLblView" destination="Hls-QQ-eCa" id="eAD-wN-2t5"/>
+                        <outlet property="spinner" destination="nup-d8-Uce" id="g3c-Ru-x3R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

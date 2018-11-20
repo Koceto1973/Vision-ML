@@ -11,6 +11,11 @@ import AVFoundation
 import CoreML
 import Vision
 
+enum FlashState {
+    case off
+    case on
+}
+
 class CameraVC: UIViewController {
     
     // Outlets
@@ -27,11 +32,6 @@ class CameraVC: UIViewController {
     var cameraOutput: AVCapturePhotoOutput!   // output of above
     var previewLayer: AVCaptureVideoPreviewLayer!  // both above presented in app
     
-    enum FlashState {
-        case off
-        case on
-    }
-    
     var flashControlState: FlashState = .off
     
     var speechSynthesizer = AVSpeechSynthesizer()
@@ -41,6 +41,8 @@ class CameraVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        spinner.center.x = captureImageView.center.x
+        spinner.center.y = captureImageView.center.y
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +86,8 @@ class CameraVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds  // camera occupies the screen
-        
+        speechSynthesizer.delegate = self
+        spinner.isHidden = true        
     }
     
     @objc func didTapCameraView() {
@@ -170,6 +173,13 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
     }
 }
 
+extension CameraVC: AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        self.cameraView.isUserInteractionEnabled = true
+        self.spinner.isHidden = true
+        self.spinner.stopAnimating()
+    }
+}
 
 
 
