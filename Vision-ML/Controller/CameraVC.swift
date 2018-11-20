@@ -34,6 +34,8 @@ class CameraVC: UIViewController {
     
     var flashControlState: FlashState = .off
     
+    var speechSynthesizer = AVSpeechSynthesizer()
+    
     var photoData: Data?
 
     override func viewDidLoad() {
@@ -112,7 +114,7 @@ class CameraVC: UIViewController {
             if classification.confidence < 0.5 {
                 let unknownObjectMessage = "I'm not sure what this is. Please try again."
                 self.identificationLbl.text = unknownObjectMessage
-                //synthesizeSpeech(fromString: unknownObjectMessage)
+                synthesizeSpeech(fromString: unknownObjectMessage)
                 self.confidenceLbl.text = ""
                 break
             } else {
@@ -120,11 +122,16 @@ class CameraVC: UIViewController {
                 let confidence = Int(classification.confidence * 100)
                 self.identificationLbl.text = identification
                 self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
-                //let completeSentence = "This looks like a \(identification) and I'm \(confidence) percent sure."
-                //synthesizeSpeech(fromString: completeSentence)
+                let completeSentence = "This looks like a \(identification) and I'm \(confidence) percent sure."
+                synthesizeSpeech(fromString: completeSentence)
                 break
             }
         }
+    }
+    
+    func synthesizeSpeech(fromString string: String) {
+        let speechUtterance = AVSpeechUtterance(string: string)
+        speechSynthesizer.speak(speechUtterance)
     }
     
     @IBAction func flashBtnWasPressed(_ sender: Any) {
