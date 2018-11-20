@@ -27,6 +27,13 @@ class CameraVC: UIViewController {
     var cameraOutput: AVCapturePhotoOutput!   // output of above
     var previewLayer: AVCaptureVideoPreviewLayer!  // both above presented in app
     
+    enum FlashState {
+        case off
+        case on
+    }
+    
+    var flashControlState: FlashState = .off
+    
     var photoData: Data?
 
     override func viewDidLoad() {
@@ -89,11 +96,11 @@ class CameraVC: UIViewController {
         
         settings.previewPhotoFormat = previewFormat
         
-//        if flashControlState == .off {
-//            settings.flashMode = .off
-//        } else {
-//            settings.flashMode = .on
-//        }
+        if flashControlState == .off {
+            settings.flashMode = .off
+        } else {
+            settings.flashMode = .on
+        }
         
         cameraOutput.capturePhoto(with: settings, delegate: self)
     }
@@ -105,7 +112,7 @@ class CameraVC: UIViewController {
             if classification.confidence < 0.5 {
                 let unknownObjectMessage = "I'm not sure what this is. Please try again."
                 self.identificationLbl.text = unknownObjectMessage
-                synthesizeSpeech(fromString: unknownObjectMessage)
+                //synthesizeSpeech(fromString: unknownObjectMessage)
                 self.confidenceLbl.text = ""
                 break
             } else {
@@ -113,12 +120,24 @@ class CameraVC: UIViewController {
                 let confidence = Int(classification.confidence * 100)
                 self.identificationLbl.text = identification
                 self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
-                let completeSentence = "This looks like a \(identification) and I'm \(confidence) percent sure."
-                synthesizeSpeech(fromString: completeSentence)
+                //let completeSentence = "This looks like a \(identification) and I'm \(confidence) percent sure."
+                //synthesizeSpeech(fromString: completeSentence)
                 break
             }
         }
     }
+    
+    @IBAction func flashBtnWasPressed(_ sender: Any) {
+        switch flashControlState {
+        case .off:
+            flashBtn.setTitle("FLASH ON", for: .normal)
+            flashControlState = .on
+        case .on:
+            flashBtn.setTitle("FLASH OFF", for: .normal)
+            flashControlState = .off
+        }
+    }
+    
 }
 
 extension CameraVC: AVCapturePhotoCaptureDelegate {

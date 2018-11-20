@@ -29,6 +29,9 @@
                                 <state key="normal" title=" Flash Off ">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="flashBtnWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cM9-BO-yiB"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hls-QQ-eCa" customClass="RoundedShadowView" customModule="Vision_ML" customModuleProvider="target">
                                 <rect key="frame" x="20" y="50" width="335" height="60"/>
